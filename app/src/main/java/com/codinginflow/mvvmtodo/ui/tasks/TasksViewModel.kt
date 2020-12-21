@@ -3,6 +3,8 @@ package com.codinginflow.mvvmtodo.ui.tasks
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import com.codinginflow.mvvmtodo.ADD_TASK_RESULT_OK
+import com.codinginflow.mvvmtodo.EDIT_TASK_RESULT_OK
 import com.codinginflow.mvvmtodo.data.PreferenceManager
 import com.codinginflow.mvvmtodo.data.SortOrder
 import com.codinginflow.mvvmtodo.data.Task
@@ -69,9 +71,21 @@ class TasksViewModel @ViewModelInject constructor(
         tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
+    fun onAddEditResult(result: Int) {
+        when (result) {
+            ADD_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task created")
+            EDIT_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task updated")
+        }
+    }
+
+    private fun showTaskSavedConfirmationMessage(text: String) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(text))
+    }
+
     sealed class TasksEvent {
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         object NavigateToAddTaskScreen : TasksEvent()
+        data class ShowTaskSavedConfirmationMessage(val message: String) : TasksEvent()
     }
 }
