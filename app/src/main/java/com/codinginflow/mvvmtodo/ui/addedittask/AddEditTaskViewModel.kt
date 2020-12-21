@@ -17,6 +17,7 @@ class AddEditTaskViewModel @ViewModelInject constructor(
     private val taskDao: TaskDao,
     @Assisted private val state: SavedStateHandle
 ) : ViewModel() {
+
     val task = state.get<Task>("task")
 
     var taskName = state.get<String>("taskName") ?: task?.name ?: ""
@@ -36,7 +37,6 @@ class AddEditTaskViewModel @ViewModelInject constructor(
 
     fun onSaveClick() {
         if (taskName.isBlank()) {
-            // show invalid input message
             showInvalidInputMessage("Name cannot be empty")
             return
         }
@@ -50,20 +50,18 @@ class AddEditTaskViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun showInvalidInputMessage(message: String) = viewModelScope.launch {
-        addEditTaskEventChannel.send(AddEditTaskEvent.ShowInvalidInputMessage(message))
-    }
-
     private fun createTask(task: Task) = viewModelScope.launch {
         taskDao.insert(task)
-        // navigate back
         addEditTaskEventChannel.send(AddEditTaskEvent.NavigateBackWithResult(ADD_TASK_RESULT_OK))
     }
 
     private fun updateTask(task: Task) = viewModelScope.launch {
         taskDao.update(task)
-        // navigate back
         addEditTaskEventChannel.send(AddEditTaskEvent.NavigateBackWithResult(EDIT_TASK_RESULT_OK))
+    }
+
+    private fun showInvalidInputMessage(text: String) = viewModelScope.launch {
+        addEditTaskEventChannel.send(AddEditTaskEvent.ShowInvalidInputMessage(text))
     }
 
     sealed class AddEditTaskEvent {
