@@ -1,1 +1,2 @@
-Watch the course here: https://www.youtube.com/playlist?list=PLrnPJCHvNZuCfAe7QK2BoMPkv2TGM_b0E
+
+Todo Application using latest architecture components and Jetpack library from android.
