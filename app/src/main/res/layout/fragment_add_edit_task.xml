@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.addedittask.AddEditTaskFragment"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,7 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
-
 
         <EditText
             android:id="@+id/edit_text_task_name"
@@ -29,16 +29,17 @@
             android:id="@+id/text_view_date_created"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text = "Date created:"/>
+            tools:text="Date created:" />
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_save_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_check_mark" />
+        android:text="Save"
+        app:icon="@drawable/ic_check_mark" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

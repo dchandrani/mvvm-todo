@@ -174,7 +174,9 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClic
     }
 
     override fun onDestroyView() {
-        searchView.setOnQueryTextListener(null)
+        if (this::searchView.isInitialized) {
+            searchView.setOnQueryTextListener(null)
+        }
         super.onDestroyView()
     }
 }
